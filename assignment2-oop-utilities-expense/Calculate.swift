@@ -12,7 +12,65 @@ class Calculate: NSObject {
     var vat:Float = 0
     var total:Float = 0
     
-    func Water_Tariffs_NonFixRate (type:Int, unit:Int) -> (subtotal:Float, vat:Float, total:Float, type:Int, unit:Int)? {
+    func Electricity_Tariffs (unit:Int) -> (subtotal:Float, vat:Float, total:Float, ft:Float, unit:Int)? {
+        let config_rate:[[String:Float]] = [
+          [
+            "range":15,
+            "rate":2.3488,
+          ],
+          [
+            "range":10,
+            "rate":2.9882,
+          ],
+          [
+            "range":10,
+            "rate":3.2405,
+          ],
+          [
+            "range":65,
+            "rate":3.6237,
+          ],
+          [
+            "range":50,
+            "rate":3.7171,
+          ],
+          [
+            "range":250,
+            "rate":4.2218,
+          ],
+          [
+            "range":0,
+            "rate":4.4217,
+          ]
+        ]
+        let service_charge:Float = 8.19
+        let ft_rate:Float = 93.43
+        
+        var temp:[String:Float] = ["unit":Float(unit),"total":0]
+        subtotal = 0
+        
+        for config_data in config_rate {
+            temp["total"] = 0
+            if(temp["unit"]! > config_data["range"]! && config_data != config_rate.last){
+                temp["unit"] = temp["unit"]! - config_data["range"]!
+                temp["total"] = config_data["range"]! * config_data["rate"]!
+            }else{
+                temp["total"] = temp["unit"]! * config_data["rate"]!
+                temp["unit"] = 0
+            }
+          
+            subtotal = subtotal + temp["total"]!
+        }
+        
+        let ft_total:Float = Float(unit) * (ft_rate/100)
+        subtotal = subtotal + service_charge + ft_total
+        vat = subtotal * 0.07
+        total = subtotal + vat
+        
+        return (subtotal, vat, total, ft_total, unit)
+    }
+    
+    func Water_Tariffs (type:Int, unit:Int) -> (subtotal:Float, vat:Float, total:Float, type:Int, unit:Int)? {
         var unit0_10:Float = 0
         var unit11_20:Float = 0
         var unit21_30:Float = 0
@@ -115,72 +173,6 @@ class Calculate: NSObject {
         
         return (subtotal, vat, total, type, unit)
     }
-    
-    func Water_Tariffs_FixRate (type:Int, unit:Int) -> (subtotal:Float, vat:Float, total:Float, type:Int, unit:Int, rate:Float)? {
-        var rate:Float = 0.0
-        
-        if(type == 1){
-            if(unit > 200){
-                rate = 14.45
-            }else if(unit >= 161){
-                rate = 13.80
-            }else if(unit >= 121){
-                rate = 13.47
-            }else if(unit >= 101){
-                rate = 13.15
-            }else if(unit >= 91){
-                rate = 12.82
-            }else if(unit >= 81){
-                rate = 12.50
-            }else if(unit >= 71){
-                rate = 11.33
-            }else if(unit >= 61){
-                rate = 11.00
-            }else if(unit >= 51){
-                rate = 10.68
-            }else if(unit >= 41){
-                rate = 10.35
-            }else if(unit >= 31){
-                rate = 10.03
-            }else{
-                rate = 8.50
-            }
-        }else{
-            if(unit > 200){
-                rate = 15.81
-            }else if(unit >= 161){
-                rate = 15.49
-            }else if(unit >= 121){
-                rate = 15.16
-            }else if(unit >= 101){
-                rate = 14.84
-            }else if(unit >= 81){
-                rate = 14.51
-            }else if(unit >= 61){
-                rate = 14.19
-            }else if(unit >= 51){
-                rate = 13.86
-            }else if(unit >= 41){
-                rate = 13.54
-            }else if(unit >= 31){
-                rate = 13.21
-            }else if(unit >= 21){
-                rate = 10.95
-            }else if(unit >= 11){
-                rate = 10.70
-            }else{
-                rate = 9.50
-            }
-        }
-        //Calculate
-        subtotal = Float(unit) * rate
-        subtotal = type == 2 && subtotal < 90 ? 90 : subtotal
-        vat = subtotal * 0.07
-        total = subtotal + vat
-        
-        return (subtotal, vat, total, type, unit, rate)
-    }
-    
     
     func Mobile_Package (package:Int, call_second:Int, sms:Int) -> (subtotal:Float, vat:Float, total:Float, package_name:String, package_price:Float, inpackage_call:Int, extra_call:Int, extra_call_price:Float, sms_use:Int, sms_price:Float)? {
         let config_package_name:[Int:String] = [

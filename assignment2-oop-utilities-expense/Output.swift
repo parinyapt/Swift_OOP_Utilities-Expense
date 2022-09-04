@@ -8,14 +8,14 @@
 import Cocoa
 
 class Output: NSObject {
-    func Show (data: (subtotal:Float, vat:Float, total:Float, type:Int, unit:Int)) {
+    func Show (data: (subtotal:Float, vat:Float, total:Float, ft:Float, unit:Int)) {
         print("""
         
-        [----Water Tariffs Calculator NonFixRate----]
+        [----Electricity Tariffs Calculator----]
         [-Usage Detail-]
-        Type : \(data.type)
-        Volume : \(data.unit) cu.m.
+        used Enegy : \(data.unit) kWh
         [-Payment Detail-]
+        Ft Charge : \(data.ft) Bath
         Subtotal (Vat not included) : \(data.subtotal) Baht
         Vat 7% : \(data.vat) Baht
         Total (Vat included) : \(data.total) Baht
@@ -23,14 +23,13 @@ class Output: NSObject {
         """)
     }
     
-    func Show (data: (subtotal:Float, vat:Float, total:Float, type:Int, unit:Int, rate:Float)) {
+    func Show (data: (subtotal:Float, vat:Float, total:Float, type:Int, unit:Int)) {
         print("""
         
-        [----Water Tariffs Calculator FixRate----]
+        [----Water Tariffs Calculator----]
         [-Usage Detail-]
         Type : \(data.type)
         Volume : \(data.unit) cu.m.
-        Rate : \(data.rate) Baht/cu.m.
         [-Payment Detail-]
         Subtotal (Vat not included) : \(data.subtotal) Baht
         Vat 7% : \(data.vat) Baht

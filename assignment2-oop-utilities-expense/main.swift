@@ -10,9 +10,10 @@ import Foundation
 var use_status:Bool = true
 var menu_select:String = ""
 
-var input = Input()
-var calculate = Calculate()
-var output = Output()
+let input = Input()
+let calculate = Calculate()
+let calculatev2 = Calculate_v2()
+let output = Output()
 
 repeat {
     menu_select = input.Select(title: "Menu", list: [
@@ -25,6 +26,14 @@ repeat {
     
     if (menu_select == "1") {
         
+        let unit_use = input.Number(title: "Enter used Energy (kWh)", min: 0)
+        if let output_data = calculate.Electricity_Tariffs(unit: unit_use) {
+            output.Show(data: output_data)
+        }else{
+            output.Error()
+        }
+
+        
     }
     else if (menu_select == "2"){
         
@@ -34,7 +43,7 @@ repeat {
             "3":"State enterprise/industry/large business",
           ])
         let unit_use = input.Number(title: "Enter Volume (cu.m.)", min: 0)
-        if let output_data = calculate.Water_Tariffs_NonFixRate(type: Int(type_select)!, unit: unit_use) {
+        if let output_data = calculate.Water_Tariffs(type: Int(type_select)!, unit: unit_use) {
             output.Show(data: output_data)
         }else{
             output.Error()
@@ -48,7 +57,7 @@ repeat {
             "2":"Commerce, Government Agency, State Enterprise and Industry",
           ])
         let unit_use = input.Number(title: "Enter Volume (cu.m.)", min: 0)
-        if let output_data = calculate.Water_Tariffs_FixRate(type: Int(type_select)!, unit: unit_use) {
+        if let output_data = calculatev2.Water_Tariffs(type: Int(type_select)!, unit: unit_use) {
             output.Show(data: output_data)
         }else{
             output.Error()
