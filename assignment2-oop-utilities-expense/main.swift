@@ -3,7 +3,7 @@
 //  assignment2-oop-utilities-expense
 //
 //  Created by Parinya Termkasipanich on 4/9/2565 BE.
-//
+// https://www.mea.or.th/upload/download/file_0cbe47e5f271ef298469220a52ae00d8.pdf
 
 import Foundation
 
@@ -95,13 +95,3 @@ repeat {
     }
 
 } while (use_status == true)
-
-//var choose:[String:String] = [
-//    "aa":"Hello",
-//    "b":"World",
-//    "3":"Test",
-//]
-//
-//var input = Input()
-//var x = input.Select(title:"Menu",list: choose)
-//print(x)
