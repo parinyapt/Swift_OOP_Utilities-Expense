@@ -11,8 +11,8 @@ var use_status:Bool = true
 var menu_select:String = ""
 
 let input = Input()
-let calculate = Calculate()
-let calculatev2 = Calculate_v2()
+let calculate = Calculate(initsubtotal:0,initvat:0,inittotal:0)
+let calculatev2 = Calculate_v2(initsubtotal:0,initvat:0,inittotal:0)
 let output = Output()
 
 repeat {

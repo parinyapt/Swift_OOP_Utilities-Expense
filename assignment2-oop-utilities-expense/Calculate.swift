@@ -8,9 +8,15 @@
 import Cocoa
 
 class Calculate: NSObject {
-    var subtotal:Float = 0
-    var vat:Float = 0
-    var total:Float = 0
+    var subtotal:Float
+    var vat:Float
+    var total:Float
+    
+    init(initsubtotal:Float,initvat:Float,inittotal:Float) {
+        self.subtotal = initsubtotal
+        self.vat = initvat
+        self.total = inittotal
+    }
     
     func Electricity_Tariffs (unit:Int) -> (subtotal:Float, vat:Float, total:Float, ft:Float, unit:Int)? {
         let config_rate:[[String:Float]] = [
